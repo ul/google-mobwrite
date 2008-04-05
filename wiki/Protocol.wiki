@@ -25,28 +25,28 @@ The server responds in a similar manner.  The server does not need to identify i
 
 = Command List =
 
-== User -- `u: or U:` ==
+== User: `u: or U:` ==
 The client identifies itself to the server.  This user ID generated randomly by the browser, if one has two tabs open with the same editor, each editor will have a different ID.  The user ID is not a method of identifying the human user, just the editor instance.
 
 If the client uses uppercase ('U:') then the server must repeat the user ID in the reply (potentially used if there are several users multiplexed on the same connection).  If the client uses lowercase ('u:') then the server may omit the user ID in the reply.  Both forms are interchangeable in the server-to-client direction.
 
 The data on the user line shares the W3 specs for names and ids in HTML: must begin with a letter ([A-Za-z]) and may be followed by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("`_`"), colons (":"), and periods (".").  The data may also not be longer than 500 bytes.
 
-== File -- `f: or F:` ==
+== File: `f: or F:` ==
 The ID of the file which is to be synchronized.
 
 If the client uses uppercase ('F:') then the server must repeat the file ID in the reply (potentially used if there are several files multiplexed on the same connection).  If the client uses lowercase ('f:') then the server may omit the file ID in the reply.  Both forms are interchangeable in the server-to-client direction.
 
 The data on the file line shares the W3 specs for names and ids in HTML: must begin with a letter ([A-Za-z]) and may be followed by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("`_`"), colons (":"), and periods (".").  The data may also not be longer than 500 bytes.
 
-== Delta -- `d: or D:` ==
+== Delta: `d: or D:` ==
 Request an edit be made to the previously specified file from the perspective of either the previously specified user (when issued by a client) or the server (when issued by the server).
 
 If the delta command is sent using uppercase ('D:') then the new content should overwrite the existing content (used for numeric/enum content).  If the delta command is sent using lowercase ('d:') then the new content should be merged with the existing content (used for text content).  The response would normally be in kind.
 
 The data for delta is a tab-separated list of commands.  The commands are identified through the first character: an equality ("="), a deletion ("-") or an insertion ("+").  Equalities and deletions are followed by the natural number of characters to keep or discard, respectively.  Insertions are followed by the hexadecimal-encoded string to insert (tabs, newline and Unicode characters must be encoded, anything else is optional).
 
-== Raw -- `r: or R:` ==
+== Raw: `r: or R:` ==
 When there is disagreement between the client and server regarding the base text (through network or programming errors), then a delta command will likely fail.  In these cases a raw command is used to transmit the entire contents of the file (in either direction), thus reestablishing the ability to delta in subsequent exchanges.
 
 If the raw command is sent using uppercase ('R:') then the provided content should overwrite the receiver's content (used for server-to-client or for numeric/enum content or to initialize unit tests).  If the raw command is sent using lowercase ('r:') then the new content should only be used to get into sync with no effect on the receiver's content (used for client-to-server text content).
