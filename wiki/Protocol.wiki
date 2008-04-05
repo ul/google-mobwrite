@@ -1,7 +1,7 @@
 #summary Client-server protocol.
 #labels Phase-Implementation
 
-= Overview =
+= Overview of Protocol =
 
 MobWrite is a symmetrical system with the server executing the same algorithms as the client.  Therefore the communication between the client and the server is also symmetrical.  Here is a typical transcript of a client talking with the server.
 
@@ -23,7 +23,7 @@ In this case the client identifies itself as user '123456'.  The client then ide
 
 The server responds in a similar manner.  The server does not need to identify itself, so no user line is required.  The server identifies the file of interest to be 'abcdef'.  The server issues notification that it has no changes to contribute to the file, which it is of the opinion is currently 305 characters in length.  A blank line terminates the request.
 
-= Commands =
+= Command List =
 
 == User: `u: or U:` ==
 The client identifies itself to the server.  This user ID generated randomly by the browser, if one has two tabs open with the same editor, each editor will have a different ID.  The user ID is not a method of identifying the human user, just the editor instance.
@@ -63,7 +63,7 @@ The data for raw is a hexadecimal-encoded string (tabs and Unicode characters mu
  * If the final command is not followed by a newline character, that command must be ignored.  Thus a connection which is truncated will partially execute up to but not including the final command.
  * A blank line at the end is required so that the receiver knows when it is safe to close the connection.
 
-= Expected Interactions =
+= Normal Interactions =
 
 There are six expected interactions when synchronizing between client and server.  When there is a disagreement noticed between the client and the server, the server always wins.  The reason is that if there are 100 collaborators, the innocent 99 should not suffer data-loss if there is one bad client.
 
