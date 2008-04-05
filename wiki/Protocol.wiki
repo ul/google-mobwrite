@@ -1,0 +1,76 @@
+#summary Client-server protocol.
+#labels Phase-Implementation
+
+= Overview =
+
+MobWrite is a symmetrical system with the server executing the same algorithms as the client.  Therefore the communication between the client and the server is also symmetrical.  Here is a typical transcript of a client talking with the server.
+
+Client:
+{{{
+  u:123456
+  F:abcdef
+  d:=200 -7 +Hello =100
+  
+}}}
+Server:
+{{{
+  f:abcdef
+  d:=305
+  
+}}}
+
+In this case the client identifies itself as user '123456'.  The client then identifies the file of interest to be 'abcdef'.  The client then issues a change request, in this case the first 200 characters are unchanged, the next 7 characters (which might be 'Goodbye') are deleted, the word 'Hello' is inserted, and the remaining 100 characters are unchanged.  A blank line terminates the request.
+
+The server responds in a similar manner.  The server does not need to identify itself, so no user line is required.  The server identifies the file of interest to be 'abcdef'.  The server issues notification that it has no changes to contribute to the file, which it is of the opinion is currently 305 characters in length.  A blank line terminates the request.
+
+= Commands =
+
+== User: `u: or U:` ==
+The client identifies itself to the server.  This user ID generated randomly by the browser, if one has two tabs open with the same editor, each editor will have a different ID.  The user ID is not a method of identifying the human user, just the editor instance.
+
+If the client uses uppercase ('U:') then the server must repeat the user ID in the reply (potentially used if there are several users multiplexed on the same connection).  If the client uses lowercase ('u:') then the server may omit the user ID in the reply.  Both forms are interchangeable in the server-to-client direction.
+
+The data on the user line shares the W3 specs for names and ids in HTML: must begin with a letter ([A-Za-z]) and may be followed by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("`_`"), colons (":"), and periods (".").  The data may also not be longer than 500 bytes.
+
+== File: `f: or F:` ==
+The ID of the file which is to be synchronized.
+
+If the client uses uppercase ('F:') then the server must repeat the file ID in the reply (potentially used if there are several files multiplexed on the same connection).  If the client uses lowercase ('f:') then the server may omit the file ID in the reply.  Both forms are interchangeable in the server-to-client direction.
+
+The data on the file line shares the W3 specs for names and ids in HTML: must begin with a letter ([A-Za-z]) and may be followed by any number of letters, digits ([0-9]), hyphens ("-"), underscores ("`_`"), colons (":"), and periods (".").  The data may also not be longer than 500 bytes.
+
+== Delta `d: or D:` ==
+Request an edit be made to the previously specified file from the perspective of either the previously specified user (when issued by a client) or the server (when issued by the server).
+
+If the delta command is sent using uppercase ('D:') then the new content should overwrite the existing content (used for numeric/enum content).  If the delta command is sent using lowercase ('d:') then the new content should be merged with the existing content (used for text content).  The response would normally be in kind.
+
+The data for delta is a tab-separated list of commands.  The commands are identified through the first character: an equality ("="), a deletion ("-") or an insertion ("+").  Equalities and deletions are followed by the natural number of characters to keep or discard, respectively.  Insertions are followed by the hexadecimal-encoded string to insert (tabs, newline and Unicode characters must be encoded, anything else is optional).
+
+== Raw `r: or R:` ==
+When there is disagreement between the client and server regarding the base text (through network or programming errors), then a delta command will likely fail.  In these cases a raw command is used to transmit the entire contents of the file (in either direction), thus reestablishing the ability to delta in subsequent exchanges.
+
+If the raw command is sent using uppercase ('R:') then the provided content should overwrite the receiver's content (used for server-to-client or for numeric/enum content or to initialize unit tests).  If the raw command is sent using lowercase ('r:') then the new content should only be used to get into sync with no effect on the receiver's content (used for client-to-server text content).
+
+The data for raw is a hexadecimal-encoded string (tabs and Unicode characters must be encoded, anything else is optional).
+
+== Notes ==
+
+ * In the interests of IE compatibility, it is recommended that the user and file data be lowercase (IE is case-insensitive -- in violation of the W3 spec).  Preserving this compatibility allows HTML form elements to use the same ID as the file being shared.  It is also recommended to avoid generating an ID with two consecutive hyphens ("--") since HTML comments are sensitive to this.
+ * In the interests of speed and consistency, it is recommended that the hexadecimal-encoding used by delta and raw be the same as the JavaScript encodeURI function, with the exception of spaces.  Thus the following 83 characters are preserved, while everything else is encoded: A-Z a-z 0-9 - `_` . ! ~ `*` ' ( ) ; / ? : @ & = + $ , # `[`space`]`
+ * Unknown commands are simply ignored.  This allows the spec to expand without breaking older implementations.
+ * Delta and raw commands will be ignored if required file (and possibly user) commands have not yet been received.
+ * There is no limit to the number of commands allowed.  It is perfectly acceptable to change the user and/or the file within a single transaction.
+ * If the final command is not followed by a newline character, that command must be ignored.  Thus a connection which is truncated will partially execute up to but not including the final command.
+ * A blank line at the end is required so that the receiver knows when it is safe to close the connection.
+
+= Expected Interactions =
+
+There are six expected interactions when synchronizing between client and server.  When there is a disagreement noticed between the client and the server, the server always wins.  The reason is that if there are 100 collaborators, the innocent 99 should not suffer data-loss if there is one bad client.
+
+|| *Type* || *Client* || *Server* || *Comments* ||
+|| Text, no error || d: || d: || Merge changes gently. ||
+|| Number, no error || D: || D: || Overwrite latest content. ||
+|| Text, server error || d: || R: || Overwrite client. ||
+|| Number, server error || D: || R: || Overwrite client. ||
+|| Text, client error || r: || d: || Overwrite client. ||
+|| Number, client error || R: || D: || Overwrite client. ||
