@@ -1,0 +1,16 @@
+#summary Configuring MobWrite for Google App Engine.
+#labels Phase-Deploy
+
+= Introduction =
+
+Google offers a web application hosting service.  There are no costs, no ads, no spam.  The only catch is that there are quotas for how much traffic, storage and CPU time one can consume.  If your application isn't Slashdot, you shouldn't have a problem.
+
+= Details =
+
+ # Download MobWrite from the download tab (above).  Unzip it on your computer.
+ # The MobWrite archive is configured for use as a Python daemon, so a small amount of shuffling is required:
+   * Delete the `mobwrite/data` and `mobwrite/daemon` directories.
+   * Create a `mobwrite/appengine/static` directory.
+   * Move the entire contents of the `mobwrite` directory into `mobwrite/appengine/static`.
+ # Now register an account with [http://appengine.google.com/ Google App Engine]
+ # Upload your copy of MobWrite and edit the JavaScript include in your client to point at your new copy.
