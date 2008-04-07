@@ -8,7 +8,7 @@
  * Opera 9
  * Microsoft Internet Explorer 6 & 7
 
-These are just the _tested_ browsers.  As long as a browser can make asynchronous HTTP requests (AJAX) it should work fine.
+These are just the _tested_ browsers.  As long as a browser can make asynchronous HTTP requests (Ajax) it should work fine.
 
 = Known issues =
 
