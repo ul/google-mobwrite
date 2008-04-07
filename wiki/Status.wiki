@@ -23,4 +23,4 @@ These are just the _tested_ browsers.  As long as a browser can make asynchronou
 
 = Support =
 
-The best place to get support is in the [http://groups.google.com/group/mobwrite MobWrite Group].
+The best place to get support is in the [http://groups.google.com/group/mobwrite MobWrite Support Group].
