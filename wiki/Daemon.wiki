@@ -18,8 +18,8 @@ The situation one wants to avoid is a webserver that does not have native knowle
 Installation is pretty easy, though it does require command-line access on your server.
 
  # Download MobWrite from the download tab (above). Unzip it on your server.
- # Start up the daemon with mobwrite/daemon/mobwrite_daemon.py
- # Move `mobwrite/daemon/q.py` or `q.php` to somewhere that's web-accessible.
+ # Start up the daemon with: `nohup mobwrite/daemon/mobwrite_daemon.py &`
+ # Move `mobwrite/daemon/q.py` or `q.php` to somewhere that's web-executable.
  # Edit `mobwrite/mobwrite_core.js` and optionally `mobwrite/tests/q.html` and `mobwrite/tests/server.html` to point at the location of the 'q' gateway.
  # Use [http://javascriptcompressor.com/ JavaScript Compressor] to compress `diff_match_patch_uncompressed.js`, `mobwrite_core.js`, and `mobwrite_form.js` into a single file called `compressed_form.js`.
 
