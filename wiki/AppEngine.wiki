@@ -9,6 +9,7 @@ Google offers a web application hosting service.  There are no costs, no ads, no
 
  # Download MobWrite (for App Engine) from the download tab (above).  Unzip it on your computer.
  # Now register an account with [http://appengine.google.com/ Google App Engine]
+ # Edit `app.yaml` to change the application name.
  # Upload your copy of MobWrite and edit the JavaScript include in your client to point at your new copy.
 
 MobWrite should now be synchronizing.  If not, try the unit tests (`http://<yourname>.appspot.com/static/tests/index.html`) and the demos (`http://<yourname>.appspot.com/static/demos/index.html`).
