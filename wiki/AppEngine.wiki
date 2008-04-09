@@ -14,4 +14,4 @@ Google offers a web application hosting service.  There are no costs, no ads, no
 
 MobWrite should now be synchronizing.  If not, try the unit tests (`http://<appname>.appspot.com/static/tests/index.html`) and the demos (`http://<appname>.appspot.com/static/demos/index.html`).
 
-There's one ugly hack that's currently required.  An external cronjob needs to be setup which calls `http://<yourname>.appspot.com/scripts/q.py?clean=1` once an hour or so.  This will keep the database nice and clean.  App Engine does not have internal chron jobs (yet).
+There's one ugly hack that's currently required.  An external cronjob needs to be setup which calls `http://<appname>.appspot.com/scripts/q.py?clean=1` once an hour or so.  This will keep the database nice and clean.  App Engine does not have internal chron jobs (yet).
