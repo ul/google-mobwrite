@@ -20,7 +20,7 @@ Installation is pretty easy, though it does require command-line access on your 
  # Download MobWrite (as daemon) from the download tab (above). Unzip it on your server.
  # Start up the daemon with: `nohup mobwrite/daemon/mobwrite_daemon.py &`
  # Move `mobwrite/daemon/q.py` or `q.php` to somewhere that's web-executable.
- # Edit `mobwrite/mobwrite_core.js` and optionally `mobwrite/tests/q.html` and `mobwrite/tests/server.html` to point at the location of the 'q' gateway.
- # Use [http://javascriptcompressor.com/ JavaScript Compressor] to compress `diff_match_patch_uncompressed.js`, `mobwrite_core.js`, and `mobwrite_form.js` into a single file called `compressed_form.js`.
+ # Edit `mobwrite/mobwrite_core.js`, `mobwrite/tests/q.html` and `mobwrite/tests/server.html` to point at the location of the 'q' gateway.
+ # Use [http://dean.edwards.name/packer/ JavaScript Compressor] to compress `diff_match_patch_uncompressed.js`, `mobwrite_core.js`, and `mobwrite_form.js` into a single file called `compressed_form.js`.
 
 MobWrite should now be ready.  Try the unit tests (`mobwrite/tests/index.html`) and the demos (`mobwrite/demos/index.html`) in a browser.
