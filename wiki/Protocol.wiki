@@ -28,7 +28,7 @@ For a complete explanation of the theory behind the protocol, read the paper or 
 = Command List =
 
 == User: `u: or U:` ==
- The client identifies itself to the server. This user ID generated randomly by the browser, if one has two tabs open with the same editor, each editor will have a different ID. The user ID is not a method of identifying the human user, just the editor instance.  If the server recognises the user ID, then the session should be matched with existing data for that user, otherwise the server may create a new session.
+The client identifies itself to the server. This user ID generated randomly by the browser, if one has two tabs open with the same editor, each editor will have a different ID. The user ID is not a method of identifying the human user, just the editor instance.  If the server recognises the user ID, then the session should be matched with existing data for that user, otherwise the server may create a new session.
 
 If the user command is sent using uppercase ("U:") then the response must repeat the user ID in the reply (potentially used if there are several users multiplexed on the same connection). If the user command is sent using lowercase ("u:") then the response may omit the user ID in the reply.
 
