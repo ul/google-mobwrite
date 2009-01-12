@@ -8,7 +8,7 @@ Synchronization and automatic conflict resolution are hard problems.  Most web a
 = Client-side =
 
 Add the following JavaScript include:
-`  <SCRIPT SRC="http://mobwrite2.appspot.com/static/compressed_form.js"></SCRIPT>`
+`  <SCRIPT SRC="http://mobwrite3.appspot.com/static/compressed_form.js"></SCRIPT>`
 
 Then add a call to `mobwrite.share('id')` where `id` is the ID of any form element on the page.  To share more than one form element, either call `mobwrite.share('id1', 'id2', ...)` or share the ID of the parent form.  Note that when sharing a parent form, all containing form elements with IDs will be shared -- even hidden fields.
 
@@ -22,7 +22,7 @@ There are three ways to setup a server.
 
 == 1: MobWrite service ==
 
-MobWrite is running on Google App Engine as `mobwrite2.appspot.com`.  If your loads are relatively light, you are welcome to use this service.  In this case you don't need to do anything.
+MobWrite is running on Google App Engine as `mobwrite3.appspot.com`.  If your loads are relatively light, you are welcome to use this service.  In this case you don't need to do anything.
 
 == 2: App Engine ==
 
