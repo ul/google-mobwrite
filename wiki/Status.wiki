@@ -4,8 +4,10 @@
 = Tested browsers =
 
  * Firefox 1.5+
+ * Chrome 1
  * Safari 3 & iPhone
  * Opera 9
+ * Android
  * Microsoft Internet Explorer 6 & 7
 
 These are just the _tested_ browsers.  As long as a browser can make asynchronous HTTP requests (Ajax) it should work fine.
