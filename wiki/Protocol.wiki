@@ -72,6 +72,7 @@ There is no requirement for the client to implement a buffer, nor is there a nee
 == Notes ==
  * In the interests of IE compatibility, it is recommended that the user and file data be lowercase (IE is case-insensitive -- in violation of the W3 spec). Preserving this compatibility allows HTML form elements to use the same ID as the file being shared. It is also recommended to avoid generating an ID with two consecutive hyphens ("--") since HTML comments are sensitive to this.
  * In the interests of speed and consistency, it is recommended that the hexadecimal-encoding used by delta, raw and buffer be the same as the JavaScript [https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Functions/encodeURI encodeURI] function, with the exception of spaces. Thus the following 83 characters are preserved, while everything else is encoded: A-Z a-z 0-9 - `_` . ! ~ `*` ' ( ) ; / ? : @ & = + $ , # `[`space`]`
+ * Because of MobWrite's cross-platform capabilities, different clients and servers may disagree on line break formats (\r, \n, \r\n).  To prevent serious edit wars, all MobWrite implementations should convert line breaks to \n.
  * Unknown commands are simply ignored. This allows the spec to expand without breaking older implementations.
  * Delta and raw commands will be ignored if required file (and possibly user) commands have not yet been received.
  * There is no limit to the number of commands allowed. It is perfectly acceptable to change the user and/or the file within a single transaction.
