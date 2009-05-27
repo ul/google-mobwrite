@@ -7,11 +7,10 @@ Google offers a web application hosting service.  There are no costs, no ads, no
 
 = Details =
 
+ # Register an account with [http://appengine.google.com/ Google App Engine] and download the SDK.
  # Download MobWrite (for App Engine) from the download tab (above).  Unzip it on your computer.
- # Now register an account with [http://appengine.google.com/ Google App Engine]
  # Edit `app.yaml` to change the application name.
- # Upload your copy of MobWrite and edit the JavaScript include in your client to point at your new copy.
+ # Use the SDK to upload your copy of MobWrite: 'appcfg.py update /path/to/mobwrite/'
+ # If your web client is not hosted on this App Engine instance, then edit both the JavaScript include and gateway property in your client to point at your new App Engine instance.  [WebClient Detailed instructions].
 
 MobWrite should now be synchronizing.  If not, try the unit tests (`http://<appname>.appspot.com/static/tests/index.html`) and the demos (`http://<appname>.appspot.com/static/demos/index.html`).
-
-There's one ugly hack that's currently required.  An external cronjob needs to be setup which calls `http://<appname>.appspot.com/scripts/q.py?clean=1` once an hour or so.  This will keep the database nice and clean.  App Engine does not have internal chron jobs (yet).
