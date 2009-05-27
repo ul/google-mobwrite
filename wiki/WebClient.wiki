@@ -28,7 +28,7 @@ Clients do not need to share the same list of elements as each other.  It is per
 mobwrite.unshare(element1, element2, ...);
 mobwrite.unshare('id1', 'id2', ...);
 }}}
-Stops sharing the requested element(s).  Unlike share(), unshare() does not currently accept forms as input.  If you want to stop sharing everything but leave the fields in place on the server, simply set `mobwrite.shared = {}`.  See the `nullifyAll` property below.
+Stops sharing the requested element(s).  Unlike share(), unshare() does not currently accept forms as input.  If you want to stop sharing everything but leave the fields in place on the server, simply set `mobwrite.shared = {}`.  See also the `nullifyAll` property below.
 
 After a remote change arrives from the server, the element's `onchange` event handler will be fired.  This allows a page to react to changes.  See the checkbox on the [http://mobwrite3.appspot.com/static/demos/form.html form demo] as an example.
 
