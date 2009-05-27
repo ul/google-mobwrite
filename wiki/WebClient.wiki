@@ -8,8 +8,8 @@ Setting up a web client is trivial, just add the following to the page:
 <SCRIPT SRC="http://mobwrite3.appspot.com/static/compressed_form.js"></SCRIPT>`
 <SCRIPT>
   mobwrite.syncGateway = 'http://mobwrite3.appspot.com/scripts/q.py';
-  mobwrite.share('formid');
-</SCRIPT>`
+</SCRIPT>
+<BODY ONLOAD="mobwrite.share('formid');">
 }}}
 
 MobWrite has a number of client-side functions and parameters which may be used for more advanced cases.
