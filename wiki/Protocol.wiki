@@ -81,6 +81,8 @@ The client's own message object is never sent back to itself, only the messages 
 
 The server must parse each JSON object for syntactic validity (discarding invalid messages), but otherwise does not know or care about the content.  The field names ("nickname", "useragent", etc) in the messages and their meanings are not defined by the protocol specification.  This is an area for the MobWrite community to help define and grow.
 
+There is no requirement for a client or server to implement messages.
+
 == Buffer: `b: or B:` ==
 The JSON-P protocol only allows client->server transmissions on URL parameters.  Since these are limited to a few hundred characters, there must be a mechanism to send large blocks of data as a single transaction via multiple connections.  Buffers have a unique name and a size.  "b:mybuffer 3 2 f%3A6%3Atest%0A" would insert "f:6:test\n" into slot two of a three slot buffer.  Buffers are created whenever an insertion command is received for an unknown buffer and are deleted after a reasonable timeout or if the buffer is executed.  The parts are transmitted in any order.  Once the buffer is fully populated, it is immediately executed, the results returned, and the buffer cleared.  Mixing buffers with other commands may lead to unpredictable results.  Buffers are designed for very short-term storage, measured in a couple of seconds or less.
 
